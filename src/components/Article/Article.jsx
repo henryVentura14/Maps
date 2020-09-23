@@ -24,15 +24,16 @@ const Article = () => {
         // setLng(article.places.latlng[1])
         //eslint-disable-next-line
     }, [])
-    const {places}=article
-    console.log(places)
+    // const {places}=article
+    // console.log(places)
+    if (article.length === 0) return (<Loading />)
     return (
         <React.Fragment>
             {!loading &&
                 <div className="center">
                     <div className="left">
                         <h1 className="title has-text-dark">{article.title}</h1>
-                        <div dangerouslySetInnerHTML={{ __html: article.body }} />
+                        <div className="has-text-black" dangerouslySetInnerHTML={{ __html: article.body }} />
                     </div>
 
                     <div className="right">

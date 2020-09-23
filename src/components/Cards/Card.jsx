@@ -2,9 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 
 const Card = ({ result, image }) => {
-    console.log(result)
     return (
-
         <div className='card is-shady'>
             <div className='card-image'>
                 <figure className='image is-4by3'>

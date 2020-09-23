@@ -9,7 +9,9 @@ import {
 const initialState = {
   loading: false,
   results: [],
-  error: ''
+  result: [],
+  error: '',
+  articles: []
 }
 const reducer_fetch_api = (state = initialState, action) => {
   switch (action.type) {
@@ -23,7 +25,7 @@ const reducer_fetch_api = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        results: action.payload,
+        result: action.payload,
         error: ''
       }
     }
@@ -47,7 +49,7 @@ const reducer_fetch_api = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        results: action.payload,
+        articles: action.payload,
         error: ''
       }
     }

@@ -10,7 +10,7 @@ const ContentCards = () => {
     const dispatch = useDispatch();
 
     // variable of the hook useSelector
-    const results = useSelector((state) => state.reducer_fetch_api.results)
+    const result = useSelector((state) => state.reducer_fetch_api.result)
     const loading = useSelector((state) => state.reducer_fetch_api.loading)
 
     const images = [
@@ -31,16 +31,15 @@ const ContentCards = () => {
         dispatch(fetch_organizations())
         //eslint-disable-next-line
     }, [])
+    if (result.length === 0) return (<Loading />)
     return (
         <Fragment>
             <Navbar />
             {!loading &&
                 <section className='containerCards'>
                     <div className='columns features'>
-                        {results.length!==0&&
-
-                            results.map((result, i) => (
-
+                        {result.length !== 0 &&
+                            result.map((result, i) => (
                                 <Card
                                     key={i + result.name}
                                     result={result}

@@ -14,7 +14,6 @@ const Map = ({ places }) => {
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
   const tooltipRef = useRef(new mapboxgl.Popup({ offset: 15 }))
-console.log(places)
   useEffect(() => {
     mapboxgl.accessToken = "pk.eyJ1IjoiaGVucnl2ZW4xNCIsImEiOiJja2ZmNmgzaTEwYnFoMnNwanlocHNkYTBpIn0.de77U42hGsCy5M-csFwWWw";
     const initializeMap = ({ setMap, mapContainer }) => {
@@ -25,7 +24,7 @@ console.log(places)
           -72.0918116,
           -15.6093241
         ],
-        zoom: 14
+        zoom: 10
       });
       map.addControl(new mapboxgl.NavigationControl());
 
