@@ -20,6 +20,7 @@ const ContentCards = () => {
     ]
     const image = images.map((img, i) =>
         <img
+            loading="lazy"
             key={i}
             src={img}
             alt="description"
@@ -37,7 +38,7 @@ const ContentCards = () => {
             <Navbar />
             {!loading &&
                 <section className='containerCards'>
-                    <div className='columns features'>
+                    <div className='columns features center'>
                         {result.length !== 0 &&
                             result.map((result, i) => (
                                 <Card

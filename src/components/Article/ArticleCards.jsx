@@ -8,7 +8,7 @@ const ArticlesCards = ({ result }) => {
             <div className="card large is-shady">
                 <div className="card-image">
                     <figure className="image is-16by9">
-                        <img src={result.thumbnail_3} alt="ImageX" />
+                        <img  loading="lazy" src={result.thumbnail_3} alt="ImageX" />
                     </figure>
                 </div>
                 <div className="card-content">

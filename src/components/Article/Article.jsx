@@ -7,9 +7,6 @@ import Map from '../Maps/Map'
 
 const Article = () => {
     let { slug } = useParams();
-    //estate
-    const [lat, setLat] = useState(null);
-    const [lng, setLng] = useState(null);
 
     // variable of the hook dispatch
     const dispatch = useDispatch();
@@ -18,14 +15,16 @@ const Article = () => {
     const article = useSelector((state) => state.reducer_fetch_api.results)
     const loading = useSelector((state) => state.reducer_fetch_api.loading)
 
+    const [latlng, setLatLng] = useState({
+        lng: -72.0918118,
+        lat: -15.6093241
+    });
+
+    const { lng, lat } = latlng
     useEffect(() => {
         dispatch(fetch_article(slug))
-        // setLat(article.places.latlng[0])
-        // setLng(article.places.latlng[1])
         //eslint-disable-next-line
     }, [])
-    // const {places}=article
-    // console.log(places)
     if (article.length === 0) return (<Loading />)
     return (
         <React.Fragment>
@@ -33,13 +32,30 @@ const Article = () => {
                 <div className="center">
                     <div className="left">
                         <h1 className="title has-text-dark">{article.title}</h1>
-                        <div className="has-text-black" dangerouslySetInnerHTML={{ __html: article.body }} />
+
+                        {/* <img src={article.thumbnail_3} /> */}
+                        <div className="content has-text-left">
+                            {/* <p className="content has-text-dark">
+                                {article.meta_description}
+                            </p> */}
+                            <ol type="I">
+                                {article.places.length !== 0 &&
+                                    article.places.map((plc, i) =>
+                                        <li
+                                            key={plc.id}
+                                            className="li"
+                                            title="see to map"
+                                            onClick={() => setLatLng({ lng: plc.latlng[1], lat: plc.latlng[0] })}
+                                        >{plc.name}</li>
+                                    )
+                                }
+                            </ol>
+                        </div>
+                         <div className="has-text-black" dangerouslySetInnerHTML={{ __html: article.body }} />
                     </div>
 
                     <div className="right">
-
-                        <Map places={article.places} />
-
+                        <Map latlng={latlng} lng={lng} lat={lat} setLatLng={setLatLng} />
                     </div>
                 </div>
             }

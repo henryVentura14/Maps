@@ -152,3 +152,20 @@
   justify-items  : center;
   align-content  : center;
 }
+
+.li {
+  cursor: pointer;
+}
+
+.sidebarStyle {
+  display         : inline-block;
+  position        : fixed;
+  top             : 28.5rem;
+  right           : -0.6rem;
+  margin          : 12px;
+  background-color: #404040;
+  color           : #ffffff;
+  z-index         : 1 !important;
+  padding         : 6px;
+  font-weight     : bold;
+}

@@ -10,25 +10,41 @@ const styles = {
   right: "0"
 };
 
-const Map = ({ places }) => {
+const Map = ({ lng, lat, setLatLng, latlng }) => {
+  //estate
+  console.log(lng, lat)
   const [map, setMap] = useState(null);
+
+  //ref
   const mapContainer = useRef(null);
   const tooltipRef = useRef(new mapboxgl.Popup({ offset: 15 }))
   useEffect(() => {
+    setLatLng({
+      lng,
+      lat
+    })
+
+  }, [lng, lat]);
+
+  useEffect(() => {
+
     mapboxgl.accessToken = "pk.eyJ1IjoiaGVucnl2ZW4xNCIsImEiOiJja2ZmNmgzaTEwYnFoMnNwanlocHNkYTBpIn0.de77U42hGsCy5M-csFwWWw";
     const initializeMap = ({ setMap, mapContainer }) => {
       const map = new mapboxgl.Map({
         container: mapContainer.current,
         style: "mapbox://styles/mapbox/streets-v11", // stylesheet location
-        center: [
-          -72.0918116,
-          -15.6093241
-        ],
+        center: [lng, lat],
         zoom: 10
       });
       map.addControl(new mapboxgl.NavigationControl());
+      map.on('move', () => {
 
-      // add tooltip when users mouse move over a point
+        setLatLng({
+          lng: map.getCenter().lng.toFixed(4),
+          lat: map.getCenter().lat.toFixed(4),
+        });
+      });
+      // tooltip when users mouse move over a point
       map.on('mousemove', e => {
         const features = map.queryRenderedFeatures(e.point)
         if (features.length) {
@@ -45,7 +61,22 @@ const Map = ({ places }) => {
             .addTo(map)
         }
       })
+      map.on('click', function (e) {
+        setLatLng({
+          lng, lat
+        })
+        // The event object (e) contains information like the
+        // coordinates of the point on the map that was clicked.
+        console.log('A click event has occurred at ' + e.lngLat);
+      });
       map.on("load", () => {
+        setLatLng({
+          lng: map.getCenter().lng.toFixed(4),
+          lat: map.getCenter().lat.toFixed(4),
+        });
+        setLatLng({
+          lng, lat
+        })
         setMap(map);
         map.resize();
       });
@@ -54,7 +85,15 @@ const Map = ({ places }) => {
     if (!map) initializeMap({ setMap, mapContainer });
   }, [map]);
 
-  return <div ref={el => (mapContainer.current = el)} style={styles} className="maps" />;
+  return (
+    <div>
+      <div className='sidebarStyle'>
+        <div>Longitude: {lng} | Latitude: {lat}
+        </div>
+      </div>
+      <div ref={el => (mapContainer.current = el)} style={styles} className="maps" />
+    </div>
+  );
 };
 
 export default Map;
